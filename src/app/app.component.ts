@@ -18,7 +18,6 @@ interface Measurement {
 })
 export class AppComponent implements OnInit {
 
-  chartLoading = true
 
   chartOption: EChartsOption = {
     title: {text: "Daily Climate Delhi 2013 to 2017"},
@@ -69,14 +68,15 @@ export class AppComponent implements OnInit {
     ]
   };
 
-  dynamicData: EChartsOption
+  chartLoading = true
+  dynamicData: EChartsOption = {}
 
   constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
     this.httpClient
-      .get<Measurement[]>('assets/data.json') 
+      .get<Measurement[]>('assets/data.json')
       .pipe(delay(1000))
       .pipe(tap(value => this.chartLoading = false))
       // @ts-ignore
