@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { forkJoin } from 'rxjs';
+import { Observable, delay, forkJoin, map, of, tap } from 'rxjs';
 
 interface Humidity {
   date: string;
@@ -21,6 +21,13 @@ interface MeanPressure {
 interface MeanTemp {
   date: string;
   meantemp: number;
+}
+
+interface DataArray {
+  meantemp: MeanTemp[];
+  humidity: Humidity[];
+  meanpressure: MeanPressure[];
+  wind_speed: WindSpeed[];
 }
 
 @Component({
@@ -59,59 +66,53 @@ export class MultipleDatasetComponent implements OnInit {
       },
     ],
   };
+
   chartLoading = true;
-  dynamicData: EChartsOption = {};
+  dynamicData$: Observable<EChartsOption> = of({});
 
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit(): void {
-    forkJoin({
+    this.dynamicData$ = forkJoin({
       meantemp: this.httpClient.get<MeanTemp[]>('assets/meantemp.json'),
       humidity: this.httpClient.get<Humidity[]>('assets/humidity.json'),
       meanpressure: this.httpClient.get<MeanPressure[]>(
         'assets/meanpressure.json'
       ),
       wind_speed: this.httpClient.get<WindSpeed[]>('assets/wind_speed.json'),
-    }).subscribe(({ meantemp, humidity, meanpressure, wind_speed }) => {
-      this.dynamicData = this.createDataset(
-        meantemp,
-        humidity,
-        meanpressure,
-        wind_speed
-      );
-      this.chartLoading = false;
-    });
+    })
+      .pipe(delay(1000))
+      .pipe(tap((_) => (this.chartLoading = false)))
+      .pipe(map(this.createDataset));
   }
 
-  private createDataset(
-    meantemp: MeanTemp[],
-    humidity: Humidity[],
-    meanpressure: MeanPressure[],
-    wind_speed: WindSpeed[]
-  ): EChartsOption {
-    return {
-      dataset: [
-        {
-          dimensions: ['date', 'meantemp'],
-          // @ts-ignore
-          source: meantemp,
-        },
-        {
-          dimensions: ['date', 'humidity'],
-          // @ts-ignore
-          source: humidity,
-        },
-        {
-          dimensions: ['date', 'meanpressure'],
-          // @ts-ignore
-          source: meanpressure,
-        },
-        {
-          dimensions: ['date', 'wind_speed'],
-          // @ts-ignore
-          source: wind_speed,
-        },
-      ],
-    };
-  }
+  private createDataset = ({
+    meantemp,
+    humidity,
+    meanpressure,
+    wind_speed,
+  }: DataArray): EChartsOption => ({
+    dataset: [
+      {
+        dimensions: ['date', 'meantemp'],
+        // @ts-ignore
+        source: meantemp,
+      },
+      {
+        dimensions: ['date', 'humidity'],
+        // @ts-ignore
+        source: humidity,
+      },
+      {
+        dimensions: ['date', 'meanpressure'],
+        // @ts-ignore
+        source: meanpressure,
+      },
+      {
+        dimensions: ['date', 'wind_speed'],
+        // @ts-ignore
+        source: wind_speed,
+      },
+    ],
+  });
 }

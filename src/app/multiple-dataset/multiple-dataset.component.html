@@ -1,7 +1,7 @@
 <div echarts
      class="demo-chart"
      [options]="chartOption"
-     [merge]="dynamicData"
+     [merge]="dynamicData$ | async"
      [theme]="'roma'"
      [loading]="chartLoading">
 </div>
