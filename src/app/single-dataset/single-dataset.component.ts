@@ -11,7 +11,7 @@ import { delay, tap } from 'rxjs';
 })
 export class SingleDatasetComponent implements OnInit {
   chartOption: EChartsOption = {
-    title: { text: 'Daily Climate Delhi 2013 to 2017' },
+    title: { text: 'Daily Climate Delhi 2013 to 2017',      left: 'center',  },
     axisPointer: { link: [{ xAxisIndex: 'all' }] },
     tooltip: { trigger: 'axis', axisPointer: {} },
     dataset: {

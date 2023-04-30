@@ -1,5 +1,15 @@
-<nav>
-  <a routerLink="/multiple-dataset">Multiple Dataset</a>
-  <a routerLink="/single-dataset">Single Dataset</a>
+<nav mat-tab-nav-bar mat-stretch-tabs="false" mat-align-tabs="center">
+  <a
+    *ngFor="let tab of tabs"
+    mat-tab-link
+    [routerLink]="tab.routerLink"
+    routerLinkActive
+    #RouterLinkActive="routerLinkActive"
+    [active]="RouterLinkActive.isActive"
+  >
+    {{ tab.label }}
+  </a>
 </nav>
+<div class="container">
 <router-outlet></router-outlet>
+</div>

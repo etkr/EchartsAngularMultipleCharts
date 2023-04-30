@@ -55,7 +55,7 @@ export class MultipleDatasetComponent implements OnInit {
         datasetIndex: 0,
         name: 'series-1',
         xAxisIndex: 0,
-        yAxisIndex: 0,
+        yAxisIndex: 0       
       },
       {
         type: 'line',
