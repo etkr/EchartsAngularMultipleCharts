@@ -1,34 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { EChartsOption } from 'echarts';
-import { Observable, delay, forkJoin, map, of, tap } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {EChartsOption} from 'echarts';
+import {delay, forkJoin, map, Observable, of, tap} from 'rxjs';
+import {Humidity} from "./humidity";
+import {WindSpeed} from "./wind-speed";
+import {DataArray} from "./data-array";
+import { MeanTemp } from './meantemp';
+import { MeanPressure } from './meanpressure';
 
-interface Humidity {
-  date: string;
-  humidity: number;
-}
-
-interface WindSpeed {
-  date: string;
-  wind_speed: number;
-}
-
-interface MeanPressure {
-  date: string;
-  meanpressure: number;
-}
-
-interface MeanTemp {
-  date: string;
-  meantemp: number;
-}
-
-interface DataArray {
-  meantemp: MeanTemp[];
-  humidity: Humidity[];
-  meanpressure: MeanPressure[];
-  wind_speed: WindSpeed[];
-}
 
 @Component({
   selector: 'app-multiple-dataset',
@@ -38,16 +17,16 @@ interface DataArray {
 export class MultipleDatasetComponent implements OnInit {
   chartOption: EChartsOption = {
     grid: [
-      { name: 'Mean Temperature', top: '60%' },
-      { name: 'Humidity', bottom: '60%' },
+      {name: 'Mean Temperature', top: '60%'},
+      {name: 'Humidity', bottom: '60%'},
     ],
-    axisPointer: { link: [{ xAxisIndex: 'all' }] },
-    tooltip: { trigger: 'axis', axisPointer: {} },
-    yAxis: [{ gridIndex: 0 }, { gridIndex: 1 }],
+    axisPointer: {link: [{xAxisIndex: 'all'}]},
+    tooltip: {trigger: 'axis', axisPointer: {}},
+    yAxis: [{gridIndex: 0}, {gridIndex: 1}],
 
     xAxis: [
-      { type: 'time', gridIndex: 0 },
-      { type: 'time', gridIndex: 1 },
+      {type: 'time', gridIndex: 0},
+      {type: 'time', gridIndex: 1},
     ],
     series: [
       {
@@ -55,7 +34,7 @@ export class MultipleDatasetComponent implements OnInit {
         datasetIndex: 0,
         name: 'series-1',
         xAxisIndex: 0,
-        yAxisIndex: 0       
+        yAxisIndex: 0
       },
       {
         type: 'line',
@@ -70,15 +49,14 @@ export class MultipleDatasetComponent implements OnInit {
   chartLoading = true;
   dynamicData$: Observable<EChartsOption> = of({});
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.dynamicData$ = forkJoin({
       meantemp: this.httpClient.get<MeanTemp[]>('assets/meantemp.json'),
       humidity: this.httpClient.get<Humidity[]>('assets/humidity.json'),
-      meanpressure: this.httpClient.get<MeanPressure[]>(
-        'assets/meanpressure.json'
-      ),
+      meanpressure: this.httpClient.get<MeanPressure[]>('assets/meanpressure.json'),
       wind_speed: this.httpClient.get<WindSpeed[]>('assets/wind_speed.json'),
     })
       .pipe(delay(1000))
@@ -86,12 +64,7 @@ export class MultipleDatasetComponent implements OnInit {
       .pipe(map(this.createDataset));
   }
 
-  private createDataset = ({
-    meantemp,
-    humidity,
-    meanpressure,
-    wind_speed,
-  }: DataArray): EChartsOption => ({
+  private createDataset = ({meantemp, humidity, meanpressure, wind_speed}: DataArray): EChartsOption => ({
     dataset: [
       {
         dimensions: ['date', 'meantemp'],

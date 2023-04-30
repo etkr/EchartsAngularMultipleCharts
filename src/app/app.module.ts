@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxEchartsModule } from 'ngx-echarts';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgxEchartsModule} from 'ngx-echarts';
 
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { SingleDatasetComponent } from './single-dataset/single-dataset.component';
-import { MultipleDatasetComponent } from './multiple-dataset/multiple-dataset.component';
-import { AppRoutingModule } from './app-routing.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTabsModule } from '@angular/material/tabs';
+import {AppComponent} from './app.component';
+import {HttpClientModule} from '@angular/common/http';
+import {SingleDatasetComponent} from './single-dataset/single-dataset.component';
+import {MultipleDatasetComponent} from './multiple-dataset/multiple-dataset.component';
+import {AppRoutingModule} from './app-routing.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import 'echarts/theme/dark-digerati.js'
 
@@ -21,7 +21,7 @@ import 'echarts/theme/dark-digerati.js'
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgxEchartsModule.forRoot({ echarts: () => import('echarts') }),
+    NgxEchartsModule.forRoot({echarts: () => import('echarts')}),
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTabsModule,
@@ -29,4 +29,5 @@ import 'echarts/theme/dark-digerati.js'
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
