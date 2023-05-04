@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { EChartsOption } from 'echarts';
-import { Measurement } from './measurement';
-import { delay, tap } from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {EChartsOption} from 'echarts';
+import {Measurement} from './measurement';
+import {delay, tap} from 'rxjs';
 
 @Component({
   selector: 'app-single-dataset',
@@ -11,9 +11,9 @@ import { delay, tap } from 'rxjs';
 })
 export class SingleDatasetComponent implements OnInit {
   chartOption: EChartsOption = {
-    title: { text: 'Daily Climate Delhi 2013 to 2017',      left: 'center',  },
-    axisPointer: { link: [{ xAxisIndex: 'all' }] },
-    tooltip: { trigger: 'axis', axisPointer: {} },
+    title: {text: 'Daily Climate Delhi 2013 to 2017', left: 'center'},
+    axisPointer: {link: [{xAxisIndex: 'all'}]},
+    tooltip: {trigger: 'axis', axisPointer: {}},
     dataset: {
       source: [],
       dimensions: [
@@ -25,25 +25,25 @@ export class SingleDatasetComponent implements OnInit {
       ],
     },
     xAxis: [
-      { type: 'time', gridIndex: 0, splitLine: { show: true } },
-      { type: 'time', gridIndex: 1, splitLine: { show: true } },
+      {type: 'time', gridIndex: 0, splitLine: {show: true}},
+      {type: 'time', gridIndex: 1, splitLine: {show: true}},
     ],
-    grid: [{ bottom: '60%' }, { top: '60%' }],
+    grid: [{bottom: '60%'}, {top: '60%'}],
     yAxis: [
       {
         gridIndex: 0,
-        axisLine: { show: true },
+        axisLine: {show: true},
         type: 'value',
-        axisLabel: { formatter: '{value} C' },
-        axisPointer: { snap: true },
+        axisLabel: {formatter: '{value} C'},
+        axisPointer: {snap: true},
         name: 'Temperature',
       },
       {
         gridIndex: 1,
-        axisLine: { show: true },
+        axisLine: {show: true},
         type: 'value',
-        axisLabel: { formatter: '{value} %' },
-        axisPointer: { snap: true },
+        axisLabel: {formatter: '{value} %'},
+        axisPointer: {snap: true},
         name: 'Humidity',
       },
     ],
@@ -53,14 +53,14 @@ export class SingleDatasetComponent implements OnInit {
         showSymbol: false,
         xAxisIndex: 0,
         yAxisIndex: 0,
-        encode: { x: 'date', y: 'meantemp' },
+        encode: {x: 'date', y: 'meantemp'}
       },
       {
         type: 'line',
         showSymbol: false,
         xAxisIndex: 1,
         yAxisIndex: 1,
-        encode: { x: 'date', y: 'humidity' },
+        encode: {x: 'date', y: 'humidity'}
       },
     ],
   };
@@ -68,7 +68,8 @@ export class SingleDatasetComponent implements OnInit {
   chartLoading = true;
   dynamicData: EChartsOption = {};
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   ngOnInit(): void {
     this.httpClient
@@ -77,7 +78,7 @@ export class SingleDatasetComponent implements OnInit {
       .pipe(tap((_) => (this.chartLoading = false)))
       .subscribe(
         // @ts-ignore
-        (value) => (this.dynamicData = { dataset: { source: value } })
+        (value) => (this.dynamicData = {dataset: {source: value}})
       );
   }
 }

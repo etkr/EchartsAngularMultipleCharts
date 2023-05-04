@@ -1,13 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
-import {EChartsOption} from 'echarts';
+import {EChartsOption, zrender} from 'echarts';
 import {delay, forkJoin, map, Observable, of, tap} from 'rxjs';
 import {Humidity} from "./humidity";
 import {WindSpeed} from "./wind-speed";
 import {DataArray} from "./data-array";
 import {MeanTemp} from './meantemp';
 import {MeanPressure} from './meanpressure';
-import {zrender_d} from "echarts/types/dist/shared";
 
 
 @Component({
@@ -20,10 +19,10 @@ export class MultipleDatasetComponent implements OnInit {
   readonly gap: number = 64;
   readonly height: number = 128;
 
-  init: zrender_d.ZRenderInitOpt = {
+  init: zrender.ZRenderInitOpt = {
     devicePixelRatio: 1,
     height: 4 * this.gap + 3 * this.height,
-    renderer: 'svg'
+    
   };
 
   chartOption: EChartsOption = {
