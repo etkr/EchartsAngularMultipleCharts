@@ -22,7 +22,6 @@ export class MultipleDatasetComponent implements OnInit {
   init: zrender.ZRenderInitOpt = {
     devicePixelRatio: 1,
     height: 4 * this.gap + 3 * this.height,
-    
   };
 
   chartOption: EChartsOption = {
@@ -69,7 +68,8 @@ export class MultipleDatasetComponent implements OnInit {
         xAxisIndex: 1,
         yAxisIndex: 1,
         showSymbol: false,
-      }, {
+      },
+      {
         type: 'line',
         datasetIndex: 2,
         name: 'Mean Pressure',
