@@ -10,13 +10,15 @@ import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTabsModule} from '@angular/material/tabs';
 
-import 'echarts/theme/dark-digerati.js'
+import 'echarts/theme/dark-digerati.js';
+import { DynamicSeriesComponent } from './dynamic-series/dynamic-series.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     SingleDatasetComponent,
     MultipleDatasetComponent,
+    DynamicSeriesComponent,
   ],
   imports: [
     BrowserModule,

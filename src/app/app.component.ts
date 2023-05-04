@@ -15,9 +15,13 @@ export class AppComponent {
     {
       routerLink: ['/multiple-dataset'],
       label: 'Multiple Dataset'
-    }, {
+    },
+    {
       routerLink: ['/single-dataset'],
       label: 'Single Dataset'
+    },   {
+      routerLink: ['/dynamic-series'],
+    label: 'Dynamic Series'
     }
   ];
 }
