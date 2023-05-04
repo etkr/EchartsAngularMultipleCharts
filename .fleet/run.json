@@ -1,0 +1,10 @@
+{
+  "configurations": [
+    {
+      "name": "start",
+      "type": "command",
+      "program": "$USER_HOME$/.n/bin/npm",
+      "args": ["run","start"],
+    }
+  ]
+}
