@@ -5,8 +5,9 @@ import {delay, forkJoin, map, Observable, of, tap} from 'rxjs';
 import {Humidity} from "./humidity";
 import {WindSpeed} from "./wind-speed";
 import {DataArray} from "./data-array";
-import { MeanTemp } from './meantemp';
-import { MeanPressure } from './meanpressure';
+import {MeanTemp} from './meantemp';
+import {MeanPressure} from './meanpressure';
+import {zrender_d} from "echarts/types/dist/shared";
 
 
 @Component({
@@ -15,33 +16,67 @@ import { MeanPressure } from './meanpressure';
   styleUrls: ['./multiple-dataset.component.scss'],
 })
 export class MultipleDatasetComponent implements OnInit {
+
+  readonly gap: number = 64;
+  readonly height: number = 128;
+
+  init: zrender_d.ZRenderInitOpt = {
+    devicePixelRatio: 1,
+    height: 4 * this.gap + 3 * this.height,
+    renderer: 'svg'
+  };
+
   chartOption: EChartsOption = {
+    title: {text: 'Weather Data', left: 'center'},
+    legend: [
+      {
+        top: .5 * this.gap,
+        data: [{name: 'Mean Temperature'}]
+      },
+      {
+        top: 1.5 * this.gap + this.height,
+        data: [{name: 'Humidity'}]
+      }, {
+        top: 2.5 * this.gap + 2 * this.height,
+        data: [{name: 'Mean Pressure'}]
+      }
+    ],
     grid: [
-      {name: 'Mean Temperature', top: '60%'},
-      {name: 'Humidity', bottom: '60%'},
+      {top: this.gap, height: this.height},
+      {top: 2 * this.gap + this.height, height: this.height},
+      {top: 3 * this.gap + 2 * this.height, height: this.height}
     ],
     axisPointer: {link: [{xAxisIndex: 'all'}]},
     tooltip: {trigger: 'axis', axisPointer: {}},
-    yAxis: [{gridIndex: 0}, {gridIndex: 1}],
-
+    yAxis: [{gridIndex: 0}, {gridIndex: 1}, {gridIndex: 2}],
     xAxis: [
       {type: 'time', gridIndex: 0},
       {type: 'time', gridIndex: 1},
+      {type: 'time', gridIndex: 2}
     ],
     series: [
       {
         type: 'line',
         datasetIndex: 0,
-        name: 'series-1',
+        name: 'Mean Temperature',
         xAxisIndex: 0,
-        yAxisIndex: 0
+        yAxisIndex: 0,
+        showSymbol: false,
       },
       {
         type: 'line',
         datasetIndex: 1,
-        name: 'series-2',
+        name: 'Humidity',
         xAxisIndex: 1,
         yAxisIndex: 1,
+        showSymbol: false,
+      }, {
+        type: 'line',
+        datasetIndex: 2,
+        name: 'Mean Pressure',
+        xAxisIndex: 2,
+        yAxisIndex: 2,
+        showSymbol: false,
       },
     ],
   };

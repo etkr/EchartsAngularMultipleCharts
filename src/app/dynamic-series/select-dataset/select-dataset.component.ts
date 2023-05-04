@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
-
-interface Option {
-  name:string
-}
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Option} from "../option";
 
 
 @Component({
@@ -11,7 +8,18 @@ interface Option {
   styleUrls: ['./select-dataset.component.scss']
 })
 export class SelectDatasetComponent {
-    
-  datasets: Option[]=  [{name: 'Mean Temperature'},{name:'Humidity'},{name:'Mean Pressure'},{name:'Wind Speed'}]
-    
+
+  @Input()
+  options: Option[] = []
+
+  @Input()
+  selectedOptions: Option[] = []
+
+  @Output()
+  selectedOptionsChange = new EventEmitter<Option[]>();
+
+  onValChange(options: Option[]) {
+    this.selectedOptionsChange.emit(options)
+  }
+
 }

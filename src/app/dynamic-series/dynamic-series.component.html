@@ -1,1 +1,3 @@
-<app-select-dataset></app-select-dataset>
+<app-select-dataset [options]="datasets" [(selectedOptions)]="options"></app-select-dataset>
+
+<p *ngFor="let option of options">{{option.name}}</p>
