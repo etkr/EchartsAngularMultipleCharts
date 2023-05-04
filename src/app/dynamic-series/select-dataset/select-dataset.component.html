@@ -1,0 +1,4 @@
+<mat-button-toggle-group name="ingredients" aria-label="Ingredients" multiple>
+  <mat-button-toggle *ngFor="let dataset of datasets" [value]="dataset">{{ dataset.name }}</mat-button-toggle>
+
+</mat-button-toggle-group>

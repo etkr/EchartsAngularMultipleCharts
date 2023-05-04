@@ -11,7 +11,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTabsModule} from '@angular/material/tabs';
 
 import 'echarts/theme/dark-digerati.js';
-import { DynamicSeriesComponent } from './dynamic-series/dynamic-series.component'
+import {DynamicSeriesComponent} from './dynamic-series/dynamic-series.component';
+import {SelectDatasetComponent} from './dynamic-series/select-dataset/select-dataset.component'
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import { DynamicSeriesComponent } from './dynamic-series/dynamic-series.componen
     SingleDatasetComponent,
     MultipleDatasetComponent,
     DynamicSeriesComponent,
+    SelectDatasetComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +30,7 @@ import { DynamicSeriesComponent } from './dynamic-series/dynamic-series.componen
     AppRoutingModule,
     BrowserAnimationsModule,
     MatTabsModule,
+    MatButtonToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],
